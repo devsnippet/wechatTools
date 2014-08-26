@@ -22,6 +22,7 @@ class KeywordController extends HomeController {
 		$nav [] = $res;
 		
 		$this->assign ( 'nav', $nav );
+		
 	}
 	public function lists() {
 		// $this->assign ( 'add_button', false );

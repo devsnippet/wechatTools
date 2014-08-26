@@ -15,7 +15,7 @@
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
-	background: #e50001;
+	background: #1fce02;
 	border: none;
 	-moz-transition: color .25s linear, background-color .25s linear;
 	-webkit-transition: color .25s linear, background-color .25s linear;
@@ -23,8 +23,8 @@
 }
 .btn:hover, .btn:focus, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
 	color: #fff;
-	background-color: #ee0809;
- *background-color: #ee0809;
+	background-color: #24e804;
+ *background-color: #24e804;
 }
 .btn-large {
 	padding: 10px 20px;
@@ -531,7 +531,7 @@ label.textarea ~ .check-tips {
 	display: block
 }
 .tab-nav .current a, .tab-nav .current a:hover {
-	background: #015dae;
+	background: #1fce02;
 	color: #fff
 }
 .tab-content {
@@ -638,11 +638,11 @@ label.textarea ~ .check-tips {
 }
 .page a:hover {
 	text-decoration: none;
-	background-color: #fa2c2e;
+	background-color: #1caf04;
 	color: #fff
 }
 .page .current {
-	background-color: #e60002;
+	background-color: #1caf04;
 	color: #fff
 }
 .page .next, .page .prev {

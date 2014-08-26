@@ -31,6 +31,7 @@ class CategoryController extends HomeController {
 		$this->assign ( 'nav', $nav );
 		
 		$this->model = $this->getModel ( 'common_category' );
+		$_GET['sidenav'] = 'home_cascade';
 	}
 	public function lists() {
 		$tree = D ( 'Category' )->getTree ( 0 );

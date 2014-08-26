@@ -21,7 +21,7 @@ function get_model_by_id($id){
 function get_attribute_type($type=''){
     // TODO 可以加入系统配置
     static $_type = array(
-        'num'       =>  array('数字','int(10) NOT NULL'),
+        'num'       =>  array('数字','int(10) UNSIGNED NOT NULL'),
         'string'    =>  array('字符串','varchar(255) NOT NULL'),
         'textarea'  =>  array('文本框','text NOT NULL'),
         'datetime'  =>  array('时间','int(10) NOT NULL'),

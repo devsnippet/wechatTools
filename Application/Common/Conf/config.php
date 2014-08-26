@@ -19,7 +19,7 @@ return array(
     //'MODULE_ALLOW_LIST'  => array('Home','Admin'),
 
     /* 系统数据加密设置 */
-    'DATA_AUTH_KEY' => 'VnStEe6fhXs2/.^iAM[pCrDaYozOJ?:mZN5I>d#K', //默认数据加密KEY
+    'DATA_AUTH_KEY' => '4du.,r7p[^JR8E=Bb5?ah>@tn0/vX_6:<)PzyQfG', //默认数据加密KEY
 
     /* 调试配置 */
     'SHOW_PAGE_TRACE' => true,
@@ -40,7 +40,7 @@ return array(
     /* 数据库配置 */
     'DB_TYPE'   => 'mysql', // 数据库类型
     'DB_HOST'   => '127.0.0.1', // 服务器地址
-    'DB_NAME'   => 'update822', // 数据库名
+    'DB_NAME'   => 'weiphp', // 数据库名
     'DB_USER'   => 'root', // 用户名
     'DB_PWD'    => '',  // 密码
     'DB_PORT'   => '3306', // 端口

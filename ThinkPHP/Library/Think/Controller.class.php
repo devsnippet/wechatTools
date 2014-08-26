@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2013 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -206,7 +206,7 @@ abstract class Controller {
 				}
 			} else {
 				if ($config ['bind_start'] != 0) {
-					$dao->replyText ( '请先<a href="' . $bind_url . '">绑定账号</a>再使用' );
+					$dao->replyText ( '请先<a href="' . $bind_url . '">绑定帐号</a>再使用' );
 					exit ();
 				}
 			}

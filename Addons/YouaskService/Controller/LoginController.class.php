@@ -13,7 +13,7 @@ class LoginController extends ChatBaseController{
 			$YouaskServiceconfig = getAddonConfig ( 'YouaskService' ); // 获取后台插件的配置参数	
 			if($YouaskServiceconfig['state'] == 1){		
 				if(session('YouaskService_userId') != ""){
-					$this->success('您已经登陆过,现在为你转到主页',addons_url ( 'YouaskService://Index/index' ));
+					$this->success('您已经登录过,现在为你转到主页',addons_url ( 'YouaskService://Index/index' ));
 				}else{
 					$userName=I ( 'post.userName','');
 					$data['userPwd']=I ( 'post.userPwd','');
@@ -34,16 +34,16 @@ class LoginController extends ChatBaseController{
 					$back=M('youaskservice_user')->where($data)->find();
 					if($back!=false){
 						if($back['state'] == 0){
-							$this->error('抱歉,您的账号已被停用!');
+							$this->error('抱歉,您的帐号已被停用!');
 						}			
 						session('YouaskService_userId',$back['id']);
 						session('YouaskService_name',$back['name']);
 						session('YouaskService_token',$data['token']);
 						session('YouaskService_userName',$back['userName']);
 						
-						$this->success('登陆成功',addons_url ( 'YouaskService://Index/index' ));
+						$this->success('登录成功',addons_url ( 'YouaskService://Index/index' ));
 					}else{
-						$this->error('您的登陆信息错误<br />请核实后再登陆');
+						$this->error('您的登录信息错误<br />请核实后再登录');
 					}
 				}
 			}else{

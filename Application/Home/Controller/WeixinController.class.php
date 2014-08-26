@@ -55,7 +55,6 @@ class WeixinController extends HomeController {
 		 * subscribe : 关注公众号
 		 * unsubscribe : 取消关注公众号
 		 * scan : 扫描带参数二维码事件
-		 * location : 上报地理位置事件
 		 * click : 自定义菜单事件
 		 */
 		if ($data ['MsgType'] == 'event') {
@@ -69,6 +68,15 @@ class WeixinController extends HomeController {
 				$key = $data ['Content'] = $data ['EventKey'];
 			} else {
 				return true;
+			}
+		}
+		// location : 上报地理位置事件 感谢网友【blue7wings】和【strivi】提供的方案
+		if ($data ['MsgType'] == 'location') {
+			$event = strtolower ( $data ['MsgType'] );
+			foreach ( $addon_list as $vo ) {
+				require_once ONETHINK_ADDON_PATH . $vo ['name'] . '/Model/WeixinAddonModel.class.php';
+				$model = D ( 'Addons://' . $vo ['name'] . '/WeixinAddon' );
+				! method_exists ( $model, $event ) || $model->$event ( $data );
 			}
 		}
 		

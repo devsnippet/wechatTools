@@ -67,5 +67,14 @@ class WeixinAddonModel extends WeixinModel {
 		}
 		return $url;
 	}
+	// 上报地理位置事件 感谢网友【blue7wings】和【strivi】提供的方案
+	public function location($dataArr) {
+		$latitude = $dataArr ['Location_X'];
+		$longitude = $dataArr ['Location_Y'];
+		$pos = file_get_contents ( 'http://lbs.juhe.cn/api/getaddressbylngb?lngx=' . $latitude . '&lngy=' . $longitude );
+		$pos_ar = json_decode ( $pos, true );
+		$this->replyText ( htmlspecialchars_decode ( $pos_ar ['row'] ['result'] ['formatted_address'] ) );
+		return true;
+	}
 }
         	

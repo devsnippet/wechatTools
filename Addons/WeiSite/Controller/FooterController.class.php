@@ -96,6 +96,11 @@ class FooterController extends BaseController {
 			$data = M ( get_table_name ( $this->model ['id'] ) )->find ( $id );
 			$data || $this->error ( '数据不存在！' );
 			
+		$token = get_token ();
+		if (isset ( $data ['token'] ) && $token != $data ['token'] && defined ( 'ADDON_PUBLIC_PATH' )) {
+			$this->error ( '非法访问！' );
+		}			
+			
 			$this->assign ( 'fields', $fields );
 			$this->assign ( 'data', $data );
 			$this->meta_title = '编辑' . $this->model ['title'];

@@ -47,7 +47,7 @@ class YouaskServiceController extends BaseController{
 		$list_grids=array();
 		$list_grids[] = array("title"=>"客服编号","field"=>"kf_id");
 		$list_grids[] = array("title"=>"昵称","field"=>"name");
-		$list_grids[] = array("title"=>"账号","field"=>"kf_account");
+		$list_grids[] = array("title"=>"帐号","field"=>"kf_account");
 		$list_grids[] = array("title"=>"正在等待接入的用户","field"=>"accepted_case");
 		$list_grids[] = array("title"=>"最大自动接入数","field"=>"auto_accept");
 		$list_grids[] = array("title"=>"在线状态","field"=>"status");
@@ -110,7 +110,7 @@ class YouaskServiceController extends BaseController{
 	public function lists() {
 		// 使用提示
 		$tongbugonghaoUrl = U('tongbugonghao');
-		$normal_tips = '工号管理：工号自动从微信平台获取,如有修改请&nbsp;<a href="'.$tongbugonghaoUrl.'">同步工号信息</a><br/>注意:<br/>&nbsp;&nbsp;&nbsp;&nbsp; 客服账号@微信别名<br/>&nbsp;&nbsp;&nbsp;&nbsp; 微信别名如有修改，旧账号使用旧的微信别名，新增的账号使用新的微信别名 ';
+		$normal_tips = '工号管理：工号自动从微信平台获取,如有修改请&nbsp;<a href="'.$tongbugonghaoUrl.'">同步工号信息</a><br/>注意:<br/>&nbsp;&nbsp;&nbsp;&nbsp; 客服帐号@微信别名<br/>&nbsp;&nbsp;&nbsp;&nbsp; 微信别名如有修改，旧帐号使用旧的微信别名，新增的帐号使用新的微信别名 ';
 		$this->assign ( 'normal_tips', $normal_tips );
 			
 		$this->assign ( 'check_all', false );
@@ -234,6 +234,11 @@ class YouaskServiceController extends BaseController{
 			// 获取数据
 			$data = M ( get_table_name ( $this->model ['id'] ) )->find ( $id );
 			$data || $this->error ( '数据不存在！' );
+			
+		$token = get_token ();
+		if (isset ( $data ['token'] ) && $token != $data ['token'] && defined ( 'ADDON_PUBLIC_PATH' )) {
+			$this->error ( '非法访问！' );
+		}			
 						
 			$this->assign ( 'fields', $fields );
 			$this->assign ( 'data', $data );

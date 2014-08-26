@@ -58,7 +58,7 @@ class CustomReplyMultController extends BaseController {
 		
 		$this->assign ( $list_data );
 		// dump ( $list_data );
-		$this->assign('search_button', false);
+		$this->assign ( 'search_button', false );
 		$templateFile = $this->model ['template_list'] ? $this->model ['template_list'] : '';
 		$this->display ( $templateFile );
 	}
@@ -78,7 +78,7 @@ class CustomReplyMultController extends BaseController {
 			
 			$model = $this->getModel ( 'custom_reply_mult' );
 			$this->_saveKeyword ( $model, $map ['id'], 'custom_reply_mult' );
-
+			
 			$this->success ( '操作成功', U ( 'lists' ) );
 			exit ();
 		}
@@ -86,6 +86,11 @@ class CustomReplyMultController extends BaseController {
 		$map ['id'] = intval ( $_GET ['id'] );
 		$info = M ( 'custom_reply_mult' )->where ( $map )->find ();
 		$this->assign ( 'mult', $info );
+		
+		$token = get_token ();
+		if (isset ( $info ['token'] ) && $token != $info ['token'] && defined ( 'ADDON_PUBLIC_PATH' )) {
+			$this->error ( '非法访问！' );
+		}
 		
 		$map ['id'] = array (
 				'in',
@@ -108,7 +113,7 @@ class CustomReplyMultController extends BaseController {
 			$save ['mult_ids'] = implode ( ',', $ids );
 			$save ['keyword'] = I ( 'post.keyword' );
 			$save ['keyword_type'] = I ( 'post.keyword_type' );
-			$save ['token'] = get_token();
+			$save ['token'] = get_token ();
 			$map ['id'] = M ( 'custom_reply_mult' )->add ( $save );
 			
 			$model = $this->getModel ( 'custom_reply_mult' );
@@ -121,8 +126,8 @@ class CustomReplyMultController extends BaseController {
 		$normal_tips = '使用说明：请先在左边通过分类或者搜索出你需要的图文，然后点击“选择“把它增加到右边的列表。';
 		$this->assign ( 'normal_tips', $normal_tips );
 		
-		$map ['token'] = get_token ();
-		if (isset ( $_REQUEST ['cate_id'] )) {
+		$map ['token'] = $cate_map ['token'] = get_token ();
+		if (! empty ( $_REQUEST ['cate_id'] )) {
 			$map ['cate_id'] = intval ( $_REQUEST ['cate_id'] );
 		}
 		if (isset ( $_REQUEST ['title'] )) {
@@ -134,9 +139,9 @@ class CustomReplyMultController extends BaseController {
 		
 		$page = I ( 'p', 1, 'intval' ); // 默认显示第一页数据
 		$row = 20;
-
+		
 		$data = M ( 'custom_reply_news' )->where ( $map )->order ( 'id DESC' )->page ( $page, $row )->select ();
-
+		
 		/* 查询记录总数 */
 		$count = M ( 'custom_reply_news' )->where ( $map )->count ();
 		$list_data ['list_data'] = $data;
@@ -149,8 +154,8 @@ class CustomReplyMultController extends BaseController {
 		}
 		
 		// 分类数据
-		$map ['is_show'] = 1;
-		$list = M ( 'weisite_category' )->where ( $map )->field ( 'id,title' )->select ();
+		$cate_map ['is_show'] = 1;
+		$list = M ( 'weisite_category' )->where ( $cate_map )->field ( 'id,title' )->select ();
 		$this->assign ( 'weisite_category', $list );
 		
 		unset ( $list_data ['list_grids'] );

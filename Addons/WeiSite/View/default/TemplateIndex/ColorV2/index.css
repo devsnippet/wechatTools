@@ -14,6 +14,6 @@ border-radius: 6px;margin-left: 5px;width: 12px;height: 12px;background: #fff;}
 .identify span.pointer{ float:right; margin-right:10px;}
 
 .icon_lists{ text-align:center; margin:10px 0}
-.icon_lists .item{ width:33.3%; float:left; color:#fff}
-.icon_lists .item .icon{ margin:10px; display:block; padding:10px 0}
+.icon_lists .item{ width:33.3%; float:left; background:#fff; color:#fff; line-height:30px;}
+.icon_lists .item .icon{ margin:10px; display:block; padding:10px 0; width:auto; height:auto}
 .icon_lists .item img{ width:50px; height:50px;}

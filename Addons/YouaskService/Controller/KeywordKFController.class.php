@@ -155,6 +155,11 @@ class KeywordKFController extends BaseController{
 			$data = M ( get_table_name ( $this->model ['id'] ) )->find ( $id );
 			$data || $this->error ( '数据不存在！' );
 			
+		$token = get_token ();
+		if (isset ( $data ['token'] ) && $token != $data ['token'] && defined ( 'ADDON_PUBLIC_PATH' )) {
+			$this->error ( '非法访问！' );
+		}			
+			
 			// 工号人员表
 			$option_users = M("youaskservice_user")->where(array("token"=>$token))->order("id desc")->select();
 			$this->assign ( 'option_users', $option_users );

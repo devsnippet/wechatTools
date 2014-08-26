@@ -634,6 +634,21 @@ function get_category_title($id) {
 }
 
 /**
+ * 获取顶级模型信息
+ */
+function get_top_model($model_id=null){
+    $map   = array('status' => 1, 'extend' => 0);
+    if(!is_null($model_id)){
+        $map['id']  =   array('neq',$model_id);
+    }
+    $model = M('Model')->where($map)->field(true)->select();
+    foreach ($model as $value) {
+        $list[$value['id']] = $value;
+    }
+    return $list;
+}
+
+/**
  * 获取文档模型信息
  *
  * @param integer $id
@@ -956,10 +971,6 @@ function get_model_attribute($model_id, $group = true) {
 		return '';
 	}
 	
-	/* 读取缓存数据 */
-	if (empty ( $list )) {
-		$list = S ( 'attribute_list' );
-	}
 	
 	/* 获取属性 */
 	if (! isset ( $list [$model_id] )) {
@@ -981,7 +992,6 @@ function get_model_attribute($model_id, $group = true) {
 		}
 		$info = M ( 'Attribute' )->where ( $map )->select ();
 		$list [$model_id] = $info;
-		// S('attribute_list', $list); //更新缓存
 	}
 	
 	$attr = array ();
@@ -1460,19 +1470,12 @@ function get_mid() {
 }
 // 通过openid获取微信用户基本信息,此功能只有认证的服务号才能用
 function getWeixinUserInfo($openid, $token) {
-	$info = get_token_appinfo ( $token );
-	if (empty ( $info ['appid'] )) {
+	$access_token = get_access_token ( $token );
+	if (empty ( $access_token )) {
 		return false;
 	}
-	$param ['appid'] = $info ['appid'];
-	$param ['secret'] = $info ['secret'];
-	$param ['grant_type'] = 'client_credential';
 	
-	$url = 'https://api.weixin.qq.com/cgi-bin/token?' . http_build_query ( $param );
-	$content = file_get_contents ( $url );
-	$content = json_decode ( $content, true );
-	
-	$param2 ['access_token'] = $content ['access_token'];
+	$param2 ['access_token'] = $access_token;
 	$param2 ['openid'] = $openid;
 	$param2 ['lang'] = 'zh_CN';
 	
@@ -1481,11 +1484,40 @@ function getWeixinUserInfo($openid, $token) {
 	$content = json_decode ( $content, true );
 	return $content;
 }
+// 获取公众号的信息
 function get_token_appinfo($token = '') {
 	empty ( $token ) && $token = get_token ();
 	$map ['token'] = $token;
 	$info = M ( 'member_public' )->where ( $map )->find ();
 	return $info;
+}
+// 判断公众号的类型：是订阅号还是服务号
+function get_token_type($token = '') {
+	$info = get_token_appinfo ( $token );
+	return intval ( $info ['type'] );
+}
+// 获取access_token，自动带缓存功能
+function get_access_token($token = '') {
+	empty ( $token ) && $token = get_token ();
+	$key = 'access_token_' . $token;
+	$res = S ( $key );
+	if ($res !== false)
+		return $res;
+	
+	$info = get_token_appinfo ( $token );
+	if (empty ( $info ['appid'] ) || empty ( $info ['secret'] )) {
+		S ( $key, 0, 7200 );
+		return 0;
+	}
+	
+	$url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' . $info ['appid'] . '&secret=' . $info ['secret'];
+	$tempArr = json_decode ( file_get_contents ( $url ), true );
+	if (@array_key_exists ( 'access_token', $tempArr )) {
+		S ( $key, $tempArr ['access_token'], 7200 );
+		return $tempArr ['access_token'];
+	} else {
+		return 0;
+	}
 }
 function OAuthWeixin($callback) {
 	$isWeixinBrowser = isWeixinBrowser ();
@@ -2132,4 +2164,30 @@ function replace_url($content) {
 	$content = str_replace ( $sreach, $replace, $content );
 	
 	return $content;
+}
+/**
+ * 验证分类是否允许发布内容
+ * @param  integer $id 分类ID
+ * @return boolean     true-允许发布内容，false-不允许发布内容
+ */
+function check_category($id){
+    if (is_array($id)) {
+        $type = get_category($id['category_id'], 'type');
+        $type = explode(",", $type);
+        return in_array($id['type'], $type);
+    } else {
+        $publish = get_category($id, 'allow_publish');
+        return $publish ? true : false;
+    }
+}
+
+/**
+ * 检测分类是否绑定了指定模型
+ * @param  array $info 模型ID和分类ID数组
+ * @return boolean     true-绑定了模型，false-未绑定模型
+ */
+function check_category_model($info){
+    $cate   =   get_category($info['category_id']);
+    $array  =   explode(',', $info['pid'] ? $cate['model_sub'] : $cate['model']);
+    return in_array($info['model_id'], $array);
 }
