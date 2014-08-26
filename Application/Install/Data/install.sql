@@ -339,7 +339,7 @@ INSERT INTO `wp_attribute` VALUES ('214', 'sort', '排序', 'int(10) unsigned NU
 INSERT INTO `wp_attribute` VALUES ('215', 'token', 'Token', 'varchar(100) NULL', 'string', '', '', '0', '', '35', '0', '1', '1396098747', '1396098747', '', '3', '', 'regex', 'get_token', '1', 'function');
 INSERT INTO `wp_attribute` VALUES ('216', 'url', '关联URL', 'varchar(255) NULL ', 'string', '', '', '1', '', '36', '0', '1', '1394519090', '1394519090', '', '3', '', 'regex', '', '3', 'function');
 INSERT INTO `wp_attribute` VALUES ('218', 'title', '菜单名', 'varchar(50) NOT NULL', 'string', '', '可创建最多 3 个一级菜单，每个一级菜单下可创建最多 5 个二级菜单。编辑中的菜单不会马上被用户看到，请放心调试。', '1', '', '36', '1', '1', '1408950832', '1394518988', '', '3', '', 'regex', '', '3', 'function');
-INSERT INTO `wp_attribute` VALUES ('219', 'pid', '一级菜单', 'tinyint(2) NULL', 'select', '0', '如果是一级菜单，选择“无”即可', '0', '0:无', '36', '0', '1', '1408323509', '1394518930', '', '3', '', 'regex', '', '3', 'function');
+INSERT INTO `wp_attribute` VALUES ('219', 'pid', '一级菜单', 'tinyint(2) NULL', 'select', '0', '如果是一级菜单，选择“无”即可', '1', '0:无', '36', '0', '1', '1409045931', '1394518930', '', '3', '', 'regex', '', '3', 'function');
 INSERT INTO `wp_attribute` VALUES ('220', 'sort', '排序号', 'tinyint(4) NULL ', 'num', '0', '数值越小越靠前', '1', '', '36', '0', '1', '1394523288', '1394519175', '', '3', '', 'regex', '', '3', 'function');
 INSERT INTO `wp_attribute` VALUES ('221', 'token', 'Token', 'varchar(255) NOT NULL', 'string', '', '', '0', '', '36', '0', '1', '1394526820', '1394526820', '', '3', '', 'regex', 'get_token', '1', 'function');
 INSERT INTO `wp_attribute` VALUES ('423', 'sort', '排序号', 'int(10) NULL ', 'num', '0', '数值越小越靠前', '1', '', '33', '0', '1', '1396340334', '1396340334', '', '3', '', 'regex', '', '3', 'function');
