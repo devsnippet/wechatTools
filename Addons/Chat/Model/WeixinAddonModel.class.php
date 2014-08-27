@@ -75,7 +75,7 @@ class WeixinAddonModel extends WeixinModel {
 		
 		$result = file_get_contents ( $api_url );
 		$result = json_decode ( $result, true );
-		if ($result ['code'] > 40000) {
+		if ($result ['code'] < 100000) {
 			return false;
 		}
 		switch ($result ['code']) {
