@@ -3,7 +3,7 @@
 本包为v0.2beta稳定版本，欢迎大家安装使用。 
 
 对于v0.2beta版本的wechatTools已安装使用的用户，
-我们会尽快出升级工具和升级教程，请耐心等待并及时关注我的网站（http://onethink.info）
+更新动态请关注我的网站（http://onethink.info）
 
 一、简介
 
